@@ -1,0 +1,111 @@
+class Node:
+    nextNode = None
+    contents = None
+
+    def __init__(self, contentInput, nextNodeInput = None):
+        print("creating new node with value " + str(contentInput))
+        self.contents = contentInput
+        self.nextNode = nextNodeInput
+
+    def getNextNode(self):
+        return self.nextNode
+
+    def getContents(self):
+        return self.contents
+
+    def addNextNode(self, nextNodeInput):
+        self.nextNode = nextNodeInput
+
+class Stack:
+    topNode = None
+
+    def __init__(self, input, isAList = False):
+        print("making a new stack.")
+        if isAList:
+            print("input is a list.")
+            self.topNode = None
+            for item in input:
+                self.push(item)
+        if isAList == False:
+            print ("input is not a list.")
+            self.topNode = Node(input)
+
+    def push(self, input):
+        print("pushing node with value:" + str(input) + ".")
+        self.topNode = Node(input, self.topNode)
+
+    def pop(self):
+        print("popping top Node")
+        if self.topNode != None:
+            outputNode = self.topNode
+            self.topNode = outputNode.getNextNode()
+            return outputNode.getContents()
+        else:
+            print("no current top node.")
+
+class Queue:
+    frontNode = None
+    backNode = None
+
+    def __init__(self, input, islist = False):
+        print("making a new Queue")
+        if islist:
+            self.frontNode = None
+            self.backNode = None
+            for item in input:
+                self.push(item)
+
+        if islist == False:
+            self.frontNode = None
+            self.backNode = None
+            self.push(input)
+
+    def push(self, input):
+        newNode = Node(input)
+        if self.backNode == None:
+            self.frontNode = newNode
+            self.backNode = newNode
+        else:
+            self.backNode.addNextNode(newNode)
+            self.backNode = newNode
+
+    def pop(self):
+        if self.frontNode != None:
+            print("popping a node.")
+            outputNode = self.frontNode
+            self.frontNode = outputNode.getNextNode()
+            if self.frontNode == None:
+                self.backNode = None
+            return outputNode.getContents()
+        else:
+            print("no node to pop.")
+            return None
+
+stackTest = Stack([1,2,3,4,5], True)
+
+print(stackTest.pop())
+stackTest.push(56)
+stackTest.push(67)
+stackTest.push(78)
+print (stackTest.pop())
+print (stackTest.pop())
+print (stackTest.pop())
+print (stackTest.pop())
+print (stackTest.pop())
+print (stackTest.pop())
+print (stackTest.pop())
+print (stackTest.pop())
+
+queueTest = Queue([1,2,3,4,5,6], True)
+
+print(queueTest.pop())
+queueTest.push("second to last node")
+queueTest.push("las node")
+print(queueTest.pop())
+print(queueTest.pop())
+print(queueTest.pop())
+print(queueTest.pop())
+print(queueTest.pop())
+print(queueTest.pop())
+print(queueTest.pop())
+print(queueTest.pop())
